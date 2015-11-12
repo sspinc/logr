@@ -1,5 +1,8 @@
-require "structured_logger/version"
 require "logger"
+
+require "structured_logger/version"
+require "structured_logger/entry"
+require "structured_logger/json_formatter"
 
 class StructuredLogger
 

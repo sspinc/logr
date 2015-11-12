@@ -1,3 +1,6 @@
+require "structured_logger/event"
+require "structured_logger/metric"
+
 class StructuredLogger
   class Entry
 
@@ -17,11 +20,13 @@ class StructuredLogger
     end
 
     def metric(name, value, type: "counter")
-
+      metric = Metric.new(name, value, type)
+      Entry.new(@logger, @event, @metrics + [metric])
     end
 
     def monitored(subject, body)
-
+      event = @event.with(monitored: true, subject: subject, body: body)
+      Entry.new(@logger, event, @metrics)
     end
 
     def debug(message=nil)
