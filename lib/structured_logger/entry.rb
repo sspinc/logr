@@ -1,19 +1,19 @@
-class StrucuredLogger
+class StructuredLogger
   class Entry
 
-    def initalize(logger_name, logger, event: nil, metrics: [], message: nil)
-      @logger_name = logger_name
+    def initialize(logger, event=nil, metrics=[], message=nil)
       @logger = logger
       @event = event
       @metrics = metrics
+      @message = message
     end
 
     def event(name, options={})
-      Entry.new(@logger_name, @logger, Event.new(name, options), @metrics)
+      Entry.new(@logger, Event.new(name, options), @metrics)
     end
 
     def with(options={})
-      Entry.new(@logger_name, @logger, @event.with(options), @metrics)
+      Entry.new(@logger, @event.with(options), @metrics)
     end
 
     def metric(name, value, type: "counter")
@@ -46,8 +46,8 @@ class StrucuredLogger
 
     private
     def add(severity, message)
-      entry = Entry.new(@logger_name, @logger, @event, @metrics, message: message)
-      logger.send(severity, entry)
+      entry = Entry.new(@logger, @event, @metrics, message)
+      @logger.send(severity, entry)
     end
   end
 end
