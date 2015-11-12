@@ -18,7 +18,7 @@ class StructuredLogger
   end
 
   def metric(name, value, type: "counter")
-    Entry.new(@logger).metric(name, value, type)
+    Entry.new(@logger).metric(name, value, type: type)
   end
 
   def debug(message)
