@@ -6,10 +6,11 @@ require "structured_logger/json_formatter"
 
 class StructuredLogger
 
-  def initialize(name, log_device=STDOUT)
+  def initialize(name, level=Logger::DEBUG, log_device=STDOUT)
     @logger = ::Logger.new(STDOUT).tap do |logger|
       logger.formatter = JSONFormatter.new
       logger.progname = name
+      logger.level = level
     end
   end
 
