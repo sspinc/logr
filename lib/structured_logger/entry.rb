@@ -49,6 +49,15 @@ class StructuredLogger
       add(:fatal, message)
     end
 
+    def to_hash
+      result = {}
+      result[:event] = @event.to_hash if @event
+      result[:metrics] = @metrics.map(&:to_hash) if @metrics.any?
+      result[:message] = @message if @message
+
+      result
+    end
+
     private
     def add(severity, message)
       entry = Entry.new(@logger, @event, @metrics, message)
