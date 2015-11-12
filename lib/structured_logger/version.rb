@@ -1,3 +1,3 @@
-module StructuredLogger
+class StructuredLogger
   VERSION = "0.1.0"
 end
