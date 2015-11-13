@@ -7,7 +7,7 @@ require "logr/json_formatter"
 module Logr
   class Logger
     def initialize(name, level=::Logger::DEBUG, log_device=STDOUT)
-      @logger = ::Logger.new(STDOUT).tap do |logger|
+      @logger = ::Logger.new(log_device).tap do |logger|
         logger.formatter = JSONFormatter.new
         logger.progname = name
         logger.level = level
