@@ -1,6 +1,6 @@
 require "json"
 
-class StructuredLogger
+module Logr
   class JSONFormatter
     def call(severity, time, logger_name, entry)
       line = {

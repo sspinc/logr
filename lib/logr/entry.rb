@@ -1,7 +1,7 @@
-require "structured_logger/event"
-require "structured_logger/metric"
+require "logr/event"
+require "logr/metric"
 
-class StructuredLogger
+module Logr
   class Entry
 
     def initialize(logger, event=nil, metrics=[], message=nil)

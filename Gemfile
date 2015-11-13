@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in structured_logger.gemspec
+# Specify your gem's dependencies in logr.gemspec
 gemspec

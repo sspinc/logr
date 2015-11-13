@@ -1,4 +1,4 @@
-class StructuredLogger
+module Logr
   class Event
     def initialize(name, context)
       @name, @context = name, context
