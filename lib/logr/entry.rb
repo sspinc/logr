@@ -24,8 +24,8 @@ module Logr
       Entry.new(@logger, @event, @metrics + [metric])
     end
 
-    def monitored(subject, body)
-      event = @event.with(monitored: true, subject: subject, body: body)
+    def monitored(title, text)
+      event = @event.with(monitored: true, title: title, text: text)
       Entry.new(@logger, event, @metrics)
     end
 
