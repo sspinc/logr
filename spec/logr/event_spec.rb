@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Logr::Event do
-  let! (:event) { Logr::Event.new('test_event', context_1_key: 'context_1_value', context_2_key: 'context_2_value') }
+  let (:event) { Logr::Event.new('test_event', context_1_key: 'context_1_value', context_2_key: 'context_2_value') }
 
   describe '#to_hash' do
-    it 'should result in a hash that has the event name' do
+    it 'should include name in hash' do
       expect(event.to_hash[:name]).to eq('test_event')
     end
 
