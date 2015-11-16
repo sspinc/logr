@@ -33,7 +33,7 @@ Or install it yourself as:
 
 ## Usage
 
-An example is worth a thousand words, I say. So here it is:
+An example is worth a thousand words they say, so here it is:
 ```ruby
 require 'logr'
 
@@ -46,7 +46,7 @@ class YourClass
   .
   .
 
-  # A complex even that you want to monitor and has metrics associated
+  # A complex event that you want to monitor and has metrics associated
   YourClass.logger.event('event-name', arbitrary: 'context', add_what: 'you_need')
                   .monitored('Title of the event', 'A longer description.')
                   .metric('metric-name', 'add as many as you like')
@@ -59,7 +59,7 @@ end
 ```
 
 The first logline will print this (all in one line of-course):
-```
+```json
 {
   "timestamp":"2015-11-16 16:47:42 UTC",
   "level":"INFO",
@@ -88,14 +88,14 @@ The first logline will print this (all in one line of-course):
 Pretty, isn't it?
 
 And here is the output of the second one:
-```
+```json
 {
   "timestamp":"2015-11-16 16:47:42 UTC",
   "level":"WARN",
   "logger":"your-logger-name",
   "message":"Oh-oh somethign is fishy!"
 }
-
+```
 
 ## Development
 
