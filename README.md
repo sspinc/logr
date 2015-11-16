@@ -2,6 +2,19 @@
 
 Structured logging with metrics and events.
 
+![Travis](https://api.travis-ci.org/sspinc/avro2kafka.svg?branch=master)
+
+## Description
+
+“Chaos was the law of nature; Order was the dream of man.”
+― Henry Adams
+
+Logr is a machine-friendly logging library for Ruby. It brings structure
+to what is usually just a messy stream of human-readable output, so you
+can later slice and dice you logs with ease. The library was designed with
+monitoring and analytics platforms in mind: bringing together events and
+metrics from your services and applications has never been easier.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,7 +33,69 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+An example is worth a thousand words, I say. So here it is:
+```ruby
+require 'logr'
+
+class YourClass
+  def self.logger
+    @logger ||= Logr::Logger.new('your-logger-name')
+  end
+
+  .
+  .
+  .
+
+  # A complex even that you want to monitor and has metrics associated
+  YourClass.logger.event('event-name', arbitrary: 'context', add_what: 'you_need')
+                  .monitored('Title of the event', 'A longer description.')
+                  .metric('metric-name', 'add as many as you like')
+                  .metric('loglines', 1234535, type: 'counter')
+                  .info('Human readable old-school logline')
+
+  # A simple logline
+  YourClass.logger.warn('Oh-oh something is fishy!')
+end
+```
+
+The first logline will print this (all in one line of-course):
+```
+{
+  "timestamp":"2015-11-16 16:47:42 UTC",
+  "level":"INFO",
+  "logger":"your-logger-name",
+  "event":{
+    "name":"event-name",
+    "arbitrary":"context",
+    "add_what":"you_need",
+    "monitored":true,
+    "title":"Title of the event",
+    "text":"A longer description."},
+  "metrics":[
+    {
+      "name":"metric-name",
+      "value":"add as many as you like",
+      "type":"counter"
+    },
+    {
+      "name":"loglines",
+      "value":1234535,
+      "type":"counter"
+    }],
+  "message":"Human readable old-school logline"
+}
+```
+Pretty, isn't it?
+
+And here is the output of the second one:
+```
+{
+  "timestamp":"2015-11-16 16:47:42 UTC",
+  "level":"WARN",
+  "logger":"your-logger-name",
+  "message":"Oh-oh somethign is fishy!"
+}
+
 
 ## Development
 
