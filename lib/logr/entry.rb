@@ -4,6 +4,8 @@ require "logr/metric"
 module Logr
   class Entry
 
+    attr_reader :metrics, :message
+
     def initialize(logger, event=nil, metrics=[], message=nil)
       @logger = logger
       @event = event
