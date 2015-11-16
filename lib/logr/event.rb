@@ -1,5 +1,7 @@
 module Logr
   class Event
+    attr_reader :name, :context
+
     def initialize(name, context)
       @name, @context = name, context
     end
