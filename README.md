@@ -11,7 +11,7 @@ Structured logging with metrics and events.
 
 Logr is a machine-friendly logging library for Ruby. It brings structure
 to what is usually just a messy stream of human-readable output, so you
-can later slice and dice you logs with ease. The library was designed with
+can later slice and dice your logs with ease. The library was designed with
 monitoring and analytics platforms in mind: bringing together events and
 metrics from your services and applications has never been easier.
 
@@ -33,7 +33,6 @@ Or install it yourself as:
 
 ## Usage
 
-An example is worth a thousand words they say, so here it is:
 ```ruby
 require 'logr'
 
@@ -49,7 +48,7 @@ class YourClass
   # A complex event that you want to monitor and has metrics associated
   YourClass.logger.event('event-name', arbitrary: 'context', add_what: 'you_need')
                   .monitored('Title of the event', 'A longer description.')
-                  .metric('metric-name', 'add as many as you like')
+                  .metric('metric-name', 34.35)
                   .metric('loglines', 1234535, type: 'counter')
                   .info('Human readable old-school logline')
 
@@ -58,7 +57,7 @@ class YourClass
 end
 ```
 
-The first logline will print this (all in one line of-course):
+The first log line pretty printed:
 ```json
 {
   "timestamp":"2015-11-16 16:47:42 UTC",
@@ -85,9 +84,8 @@ The first logline will print this (all in one line of-course):
   "message":"Human readable old-school logline"
 }
 ```
-Pretty, isn't it?
 
-And here is the output of the second one:
+Log line with simple message:
 ```json
 {
   "timestamp":"2015-11-16 16:47:42 UTC",
