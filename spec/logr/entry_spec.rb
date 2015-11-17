@@ -63,19 +63,27 @@ describe Logr::Entry do
   end
 
   describe '#monitored' do
-    let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
-    let(:entry_event_monitored) { entry_event.monitored('title', 'text') }
+    context 'existing event' do
+      let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
+      let(:entry_event_monitored) { entry_event.monitored('title', 'text') }
 
-    it 'should keep the event name' do
-      expect(entry_event_monitored.event.name).to eq(entry_event.event.name)
+      it 'should keep the event name' do
+        expect(entry_event_monitored.event.name).to eq(entry_event.event.name)
+      end
+
+      it 'should keep the original event context' do
+        expect(entry_event_monitored.event.context).to include(entry_event.event.context)
+      end
+
+      it 'should add title and text to event context' do
+        expect(entry_event_monitored.event.context).to include(monitored: true, title: 'title', text: 'text')
+      end
     end
 
-    it 'should keep the original event context' do
-      expect(entry_event_monitored.event.context).to include(entry_event.event.context)
-    end
-
-    it 'should add title and text to event context' do
-      expect(entry_event_monitored.event.context).to include(monitored: true, title: 'title', text: 'text')
+    context 'non-existing event' do
+      it 'should fail' do
+        expect { entry.monitored('title', 'text') }.to raise_error(RuntimeError, 'No event to monitor. Please call #event first.')
+      end
     end
   end
 

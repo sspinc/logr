@@ -34,6 +34,9 @@ module Logr
     end
 
     def monitored(title, text)
+      if @event.nil?
+        raise 'No event to monitor. Please call #event first.'
+      end
       event = @event.with(monitored: true, title: title, text: text)
       Entry.new(@logger, event, @metrics)
     end
