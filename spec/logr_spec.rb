@@ -3,9 +3,9 @@ require 'logger'
 require 'json'
 
 describe Logr do
-  context 'default DEBUG log level' do
+  context 'DEBUG log level' do
     let(:test_output) { StringIO.new }
-    let(:logger) { Logr::Logger.new('test_logger', Logger::DEBUG, test_output) }
+    let(:logger) { Logr::Logger.new('test_logger', level: Logger::DEBUG, log_device: test_output) }
 
     describe '#debug' do
       before do
@@ -118,9 +118,9 @@ describe Logr do
     end
   end
 
-  context 'WARN debug level' do
+  context 'WARN log level' do
     let(:test_output) { StringIO.new }
-    let(:logger) { Logr::Logger.new('test_logger', Logger::WARN, test_output) }
+    let(:logger) { Logr::Logger.new('test_logger', level: Logger::WARN, log_device: test_output) }
 
     describe '#info' do
       before do
