@@ -36,7 +36,7 @@ describe Logr::Entry do
 
     context 'non-existing event' do
       it 'should fail' do
-        expect { entry.with }.to raise_error(NoMethodError)
+        expect { entry.with }.to raise_error(RuntimeError, 'No event to append to. Please call #event first.')
       end
     end
   end

@@ -22,6 +22,9 @@ module Logr
     end
 
     def with(options={})
+      if @event.nil?
+        raise 'No event to append to. Please call #event first.'
+      end
       Entry.new(@logger, @event.with(options), @metrics)
     end
 
