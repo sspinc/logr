@@ -73,7 +73,7 @@ The first log line pretty printed:
   "metrics":[
     {
       "name":"metric-name",
-      "value":"add as many as you like",
+      "value":34.35,
       "type":"counter"
     },
     {
