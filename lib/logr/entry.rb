@@ -13,8 +13,12 @@ module Logr
       @message = message
     end
 
-    def event(name, options={})
-      Entry.new(@logger, Event.new(name, options), @metrics)
+    def event(name=nil, options={})
+      if name.nil?
+        @event
+      else
+        Entry.new(@logger, Event.new(name, options), @metrics)
+      end
     end
 
     def with(options={})

@@ -8,11 +8,11 @@ describe Logr::Entry do
     let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
 
     it 'should add the event with the correct name' do
-      expect(entry_event.instance_variable_get(:@event).name).to eq('test_event')
+      expect(entry_event.event.name).to eq('test_event')
     end
 
     it 'should add the event with the correct context' do
-      expect(entry_event.instance_variable_get(:@event).context).to include(context_1_key: 'context_1_value')
+      expect(entry_event.event.context).to include(context_1_key: 'context_1_value')
     end
   end
 
@@ -22,15 +22,15 @@ describe Logr::Entry do
       let(:entry_event_with) { entry_event.with(context_2_key: 'context_2_value') }
 
       it 'should keep the event name' do
-        expect(entry_event_with.instance_variable_get(:@event).name).to eq('test_event')
+        expect(entry_event_with.event.name).to eq('test_event')
       end
 
       it 'should keep the old event context' do
-        expect(entry_event_with.instance_variable_get(:@event).context).to include(context_1_key: 'context_1_value')
+        expect(entry_event_with.event.context).to include(context_1_key: 'context_1_value')
       end
 
       it 'should add the new event context' do
-        expect(entry_event_with.instance_variable_get(:@event).context).to include(context_2_key: 'context_2_value')
+        expect(entry_event_with.event.context).to include(context_2_key: 'context_2_value')
       end
     end
 
@@ -67,15 +67,15 @@ describe Logr::Entry do
     let(:entry_event_monitored) { entry_event.monitored('title', 'text') }
 
     it 'should keep the event name' do
-      expect(entry_event_monitored.instance_variable_get(:@event).name).to eq(entry_event.instance_variable_get(:@event).name)
+      expect(entry_event_monitored.event.name).to eq(entry_event.event.name)
     end
 
     it 'should keep the original event context' do
-      expect(entry_event_monitored.instance_variable_get(:@event).context).to include(entry_event.instance_variable_get(:@event).context)
+      expect(entry_event_monitored.event.context).to include(entry_event.event.context)
     end
 
     it 'should add title and text to event context' do
-      expect(entry_event_monitored.instance_variable_get(:@event).context).to include(monitored: true, title: 'title', text: 'text')
+      expect(entry_event_monitored.event.context).to include(monitored: true, title: 'title', text: 'text')
     end
   end
 
