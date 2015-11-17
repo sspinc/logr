@@ -42,7 +42,7 @@ describe Logr::Entry do
   end
 
   describe '#metric' do
-    let(:entry_metric_1) { entry.metric('test_metric_1', 'one') }
+    let(:entry_metric_1) { entry.metric('test_metric_1', 1.111) }
     let(:entry_metric_2) { entry_metric_1.metric('test_metric_2', 2, type: 'gauge') }
 
     it 'should keep existing metric' do
