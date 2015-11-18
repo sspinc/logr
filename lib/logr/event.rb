@@ -1,17 +1,17 @@
 module Logr
   class Event
-    attr_reader :name, :context
+    attr_reader :name, :tags
 
-    def initialize(name, context)
-      @name, @context = name, context
+    def initialize(name, tags)
+      @name, @tags = name, tags
     end
 
     def to_hash
-      { name: @name }.merge(@context)
+      { name: @name }.merge(@tags)
     end
 
-    def with(context)
-      Event.new(@name, @context.merge(context))
+    def with(tags)
+      Event.new(@name, @tags.merge(tags))
     end
   end
 end

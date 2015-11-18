@@ -13,19 +13,19 @@ module Logr
       @message = message
     end
 
-    def event(name=nil, options={})
+    def event(name=nil, tags={})
       if name.nil?
         @event
       else
-        Entry.new(@logger, Event.new(name, options), @metrics)
+        Entry.new(@logger, Event.new(name, tags), @metrics)
       end
     end
 
-    def with(options={})
+    def with(tags={})
       if @event.nil?
         raise 'No event to append to. Please call #event first.'
       end
-      Entry.new(@logger, @event.with(options), @metrics)
+      Entry.new(@logger, @event.with(tags), @metrics)
     end
 
     def metric(name, value, type: "counter")

@@ -14,8 +14,8 @@ module Logr
       end
     end
 
-    def event(name, options={})
-      Entry.new(@logger).event(name, options)
+    def event(name, tags={})
+      Entry.new(@logger).event(name, tags)
     end
 
     def metric(name, value, type: "counter")

@@ -5,32 +5,32 @@ describe Logr::Entry do
   let(:entry) { Logr::Entry.new(logger) }
 
   describe '#event' do
-    let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
+    let(:entry_event) { entry.event('test_event', tags_1_key: 'tags_1_value') }
 
     it 'should add the event with the correct name' do
       expect(entry_event.event.name).to eq('test_event')
     end
 
-    it 'should add the event with the correct context' do
-      expect(entry_event.event.context).to include(context_1_key: 'context_1_value')
+    it 'should add the event with the correct tags' do
+      expect(entry_event.event.tags).to include(tags_1_key: 'tags_1_value')
     end
   end
 
   describe '#with' do
     context 'existing event' do
-      let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
-      let(:entry_event_with) { entry_event.with(context_2_key: 'context_2_value') }
+      let(:entry_event) { entry.event('test_event', tags_1_key: 'tags_1_value') }
+      let(:entry_event_with) { entry_event.with(tags_2_key: 'tags_2_value') }
 
       it 'should keep the event name' do
         expect(entry_event_with.event.name).to eq('test_event')
       end
 
-      it 'should keep the old event context' do
-        expect(entry_event_with.event.context).to include(context_1_key: 'context_1_value')
+      it 'should keep the old event tags' do
+        expect(entry_event_with.event.tags).to include(tags_1_key: 'tags_1_value')
       end
 
-      it 'should add the new event context' do
-        expect(entry_event_with.event.context).to include(context_2_key: 'context_2_value')
+      it 'should add the new event tags' do
+        expect(entry_event_with.event.tags).to include(tags_2_key: 'tags_2_value')
       end
     end
 
@@ -64,19 +64,19 @@ describe Logr::Entry do
 
   describe '#monitored' do
     context 'existing event' do
-      let(:entry_event) { entry.event('test_event', context_1_key: 'context_1_value') }
+      let(:entry_event) { entry.event('test_event', tags_1_key: 'tags_1_value') }
       let(:entry_event_monitored) { entry_event.monitored('title', 'text') }
 
       it 'should keep the event name' do
         expect(entry_event_monitored.event.name).to eq(entry_event.event.name)
       end
 
-      it 'should keep the original event context' do
-        expect(entry_event_monitored.event.context).to include(entry_event.event.context)
+      it 'should keep the original event tags' do
+        expect(entry_event_monitored.event.tags).to include(entry_event.event.tags)
       end
 
-      it 'should add title and text to event context' do
-        expect(entry_event_monitored.event.context).to include(monitored: true, title: 'title', text: 'text')
+      it 'should add title and text to event tags' do
+        expect(entry_event_monitored.event.tags).to include(monitored: true, title: 'title', text: 'text')
       end
     end
 
