@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'logger'
 require 'json'
+require 'timecop'
 
 describe Logr do
   context 'DEBUG log level' do
@@ -10,23 +11,32 @@ describe Logr do
     %w[debug info warn error fatal].each do |level|
       describe "##{level}" do
         before do
+          Timecop.freeze(Time.local(1990))
           logger.send(level, 'Test message')
         end
 
-        it 'should print a timestamp' do
-          logline = JSON.parse(test_output.string)
-          expect(logline.has_key?('timestamp')).to eq(true)
+        after do
+          Timecop.return
         end
 
-        it 'should print everything else in the correct structure' do
+        it 'should print a logline containing the logger name' do
           logline = JSON.parse(test_output.string)
-          logline.delete('timestamp')
-          expected_logline = {
-            'logger'  => 'test_logger',
-            'level'   => level.upcase,
-            'message' => 'Test message'
-          }
-          expect(logline).to eq(expected_logline)
+          expect(logline).to include('logger' => 'test_logger')
+        end
+
+        it 'should print a logline containing the level' do
+          logline = JSON.parse(test_output.string)
+          expect(logline).to include('level' => level.upcase)
+        end
+
+        it 'should print a logline containing the timestamp' do
+          logline = JSON.parse(test_output.string)
+          expect(logline).to include('timestamp' => Time.now.utc.to_s)
+        end
+
+        it 'should print a logline containing the message' do
+          logline = JSON.parse(test_output.string)
+          expect(logline).to include('message' => 'Test message')
         end
       end
     end
@@ -48,45 +58,63 @@ describe Logr do
 
     describe '#warn' do
       before do
+        Timecop.freeze(Time.local(1990))
         logger.warn('Test message')
       end
 
-      it 'should print a timestamp' do
-        logline = JSON.parse(test_output.string)
-        expect(logline.has_key?('timestamp')).to eq(true)
+      after do
+        Timecop.return
       end
 
-      it 'should print everything else in the correct structure' do
+      it 'should print a logline containing the logger name' do
         logline = JSON.parse(test_output.string)
-        logline.delete('timestamp')
-        expected_logline = {
-          'logger'  => 'test_logger',
-          'level'   => 'WARN',
-          'message' => 'Test message'
-        }
-        expect(logline).to eq(expected_logline)
+        expect(logline).to include('logger' => 'test_logger')
+      end
+
+      it 'should print a logline containing the level' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('level' => 'WARN')
+      end
+
+      it 'should print a logline containing the timestamp' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('timestamp' => Time.now.utc.to_s)
+      end
+
+      it 'should print a logline containing the message' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('message' => 'Test message')
       end
     end
 
     describe '#error' do
       before do
+        Timecop.freeze(Time.local(1990))
         logger.error('Test message')
       end
 
-      it 'should print a timestamp' do
-        logline = JSON.parse(test_output.string)
-        expect(logline.has_key?('timestamp')).to eq(true)
+      after do
+        Timecop.return
       end
 
-      it 'should print everything else in the correct structure' do
+      it 'should print a logline containing the logger name' do
         logline = JSON.parse(test_output.string)
-        logline.delete('timestamp')
-        expected_logline = {
-          'logger'  => 'test_logger',
-          'level'   => 'ERROR',
-          'message' => 'Test message'
-        }
-        expect(logline).to eq(expected_logline)
+        expect(logline).to include('logger' => 'test_logger')
+      end
+
+      it 'should print a logline containing the level' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('level' => 'ERROR')
+      end
+
+      it 'should print a logline containing the timestamp' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('timestamp' => Time.now.utc.to_s)
+      end
+
+      it 'should print a logline containing the message' do
+        logline = JSON.parse(test_output.string)
+        expect(logline).to include('message' => 'Test message')
       end
     end
   end
