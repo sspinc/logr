@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Logr::Entry do
   let(:logger) { double('logger') }
   let(:entry) { Logr::Entry.new(logger) }
+  let(:message) { 'test message' }
 
   describe '#event' do
     let(:entry_event) { entry.event('test_event', tags_1_key: 'tags_1_value') }
@@ -87,40 +88,23 @@ describe Logr::Entry do
     end
   end
 
-  describe '#debug' do
-    it 'should call logger.debug with Entry object' do
-      expect(logger).to receive(:debug).with(instance_of(Logr::Entry))
-      entry.debug
+  RSpec::Matchers.define :have_message do |expected|
+    match do |actual|
+      actual.message == expected
     end
   end
 
-  describe '#info' do
-    it 'should call logger.info with Entry object' do
-      expect(logger).to receive(:info).with(instance_of(Logr::Entry))
-      entry.info
-    end
-  end
+  %w[debug info warn error fatal].each do |level|
+    describe "##{level}" do
+      it "should call logger.#{level} with Entry object" do
+        expect(logger).to receive(level).with(instance_of(Logr::Entry))
+        entry.send(level)
+      end
 
-  describe '#warn' do
-    it 'should call logger.warn with Entry object' do
-      expect(logger).to receive(:warn).with(instance_of(Logr::Entry))
-      entry.warn
-    end
-
-  end
-
-  describe '#error' do
-    it 'should call logger.error with Entry object' do
-      expect(logger).to receive(:error).with(instance_of(Logr::Entry))
-      entry.error
-    end
-
-  end
-
-  describe '#fatal' do
-    it 'should call logger.fatal with Entry object' do
-      expect(logger).to receive(:fatal).with(instance_of(Logr::Entry))
-      entry.fatal
+      it "should call logger.#{level} with the supplied message" do
+        expect(logger).to receive(level).with(have_message(message))
+        entry.send(level, message)
+      end
     end
   end
  end
