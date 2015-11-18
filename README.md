@@ -2,7 +2,7 @@
 
 Structured logging with metrics and events.
 
-![Travis](https://api.travis-ci.org/sspinc/avro2kafka.svg?branch=master)
+![Travis](https://api.travis-ci.org/sspinc/logr.svg?branch=master)
 
 ## Description
 
