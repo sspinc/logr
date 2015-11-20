@@ -91,7 +91,7 @@ Log line with simple message:
   "timestamp":"2015-11-16 16:47:42 UTC",
   "level":"WARN",
   "logger":"your-logger-name",
-  "message":"Oh-oh somethign is fishy!"
+  "message":"Oh-oh something is fishy!"
 }
 ```
 
