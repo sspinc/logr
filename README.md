@@ -2,7 +2,7 @@
 
 Structured logging with metrics and events.
 
-![Travis](https://api.travis-ci.org/sspinc/logr.svg?branch=master)
+![CircleCI](https://circleci.com/gh/sspinc/logr.svg?style=shield&circle-token=:circle-token)
 
 ## Description
 
