@@ -3,7 +3,7 @@ require 'logger'
 require 'json'
 require 'timecop'
 
-describe Logr do
+describe Logr::Logger do
   context 'DEBUG log level' do
     let(:test_output) { StringIO.new }
     let(:logger) { Logr::Logger.new('test_logger', level: Logger::DEBUG, log_device: test_output) }
