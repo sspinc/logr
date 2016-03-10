@@ -1,45 +1,19 @@
-require "logger"
-
 require "logr/version"
-require "logr/entry"
-require "logr/json_formatter"
+require "logr/logger"
 
 module Logr
-  class Logger
-    def initialize(name, level: ::Logger::INFO, log_device: STDOUT)
-      @logger = ::Logger.new(log_device).tap do |logger|
-        logger.formatter = JSONFormatter.new
-        logger.progname = name
-        logger.level = level
-      end
-    end
+  # Parse log level from an environment variable
+  #
+  # @param default [Symbol] the default log level
+  # @param var [String] the environment variable to use
+  # @return the parsed logger level as a number
+  def self.parse_level(default: :info, var: "LOG_LEVEL")
+    valid_levels = %w[DEBUG INFO WARN ERROR FATAL UNKNOWN]
 
-    def event(name, tags={})
-      Entry.new(@logger).event(name, tags)
-    end
+    default = default.upcase
+    level = ENV.fetch(var, default).upcase.to_s
+    level = valid_levels.find(-> { default }) { |lvl| lvl == level }
 
-    def metric(name, value, type: "counter")
-      Entry.new(@logger).metric(name, value, type: type)
-    end
-
-    def debug(message)
-      Entry.new(@logger).debug(message)
-    end
-
-    def info(message)
-      Entry.new(@logger).info(message)
-    end
-
-    def warn(message)
-      Entry.new(@logger).warn(message)
-    end
-
-    def error(message)
-      Entry.new(@logger).error(message)
-    end
-
-    def fatal(message)
-      Entry.new(@logger).fatal(message)
-    end
+    ::Logger.const_get(level)
   end
 end

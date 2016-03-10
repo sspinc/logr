@@ -95,6 +95,15 @@ Log line with simple message:
 }
 ```
 
+The default log level is INFO, you can overwrite this by providing the
+`$LOG_LEVEL` environmental variable or setting the log level in
+`Logr::Logger.new`. If you'd like to use `$LOG_LEVEL` for something
+else you can use another env variable name by passing the name to
+`Logr::Logger.new` as below:
+```ruby
+Logr::Logger.new('your-logger-name', level: Logr.parse_level(var: 'YOUR_ENV_VARIABLE'))
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
