@@ -21,24 +21,24 @@ module Logr
       Entry.new(@logger).metric(name, value, type: type)
     end
 
-    def debug(message)
-      Entry.new(@logger).debug(message)
+    def debug(message=nil, &block)
+      Entry.new(@logger).debug(message, &block)
     end
 
-    def info(message)
-      Entry.new(@logger).info(message)
+    def info(message=nil, &block)
+      Entry.new(@logger).info(message, &block)
     end
 
-    def warn(message)
-      Entry.new(@logger).warn(message)
+    def warn(message=nil, &block)
+      Entry.new(@logger).warn(message, &block)
     end
 
-    def error(message)
-      Entry.new(@logger).error(message)
+    def error(message=nil, &block)
+      Entry.new(@logger).error(message, &block)
     end
 
-    def fatal(message)
-      Entry.new(@logger).fatal(message)
+    def fatal(message=nil, &block)
+      Entry.new(@logger).fatal(message, &block)
     end
   end
 end

@@ -107,4 +107,18 @@ describe Logr::Entry do
       end
     end
   end
- end
+
+  describe 'block form' do
+    it 'uses the the return value of the block as message' do
+      allow(logger).to receive(:debug?).and_return(true)
+      expect(logger).to receive(:debug).with(have_message('test output'))
+      entry.debug { 'test output' }
+    end
+
+    it 'runs the block only if the level is high enough' do
+      allow(logger).to receive(:debug?).and_return(false)
+      expect(logger).to receive(:debug).with(have_message(nil))
+      expect { |blk| entry.debug(&blk) }.to_not yield_control
+    end
+  end
+end
