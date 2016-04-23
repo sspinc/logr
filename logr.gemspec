@@ -6,8 +6,8 @@ require 'logr/version'
 Gem::Specification.new do |spec|
   spec.name          = "logr"
   spec.version       = Logr::VERSION
-  spec.authors       = ["Peter Marton"]
-  spec.email         = ["martonpe@secretsaucepartners.com"]
+  spec.authors       = ["Peter Marton", "Tamas Michelberger"]
+  spec.email         = ["martonpe@secretsaucepartners.com", "tomi@secretsaucepartners.com"]
 
   spec.summary       = "Structured logging with events and metrics"
   spec.description   = "Structured logging with events and metrics"
@@ -15,7 +15,8 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "exe"
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.10"
