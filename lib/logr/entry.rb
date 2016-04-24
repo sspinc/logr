@@ -41,24 +41,24 @@ module Logr
       Entry.new(@logger, event, @metrics)
     end
 
-    def debug(message=nil)
-      add(:debug, message)
+    def debug(message=nil, &block)
+      add(:debug, message, &block)
     end
 
-    def info(message=nil)
-      add(:info, message)
+    def info(message=nil, &block)
+      add(:info, message, &block)
     end
 
-    def warn(message=nil)
-      add(:warn, message)
+    def warn(message=nil, &block)
+      add(:warn, message, &block)
     end
 
-    def error(message=nil)
-      add(:error, message)
+    def error(message=nil, &block)
+      add(:error, message, &block)
     end
 
-    def fatal(message=nil)
-      add(:fatal, message)
+    def fatal(message=nil, &block)
+      add(:fatal, message, &block)
     end
 
     def to_hash
@@ -71,7 +71,10 @@ module Logr
     end
 
     private
-    def add(severity, message)
+
+    def add(severity, message, &block)
+      message = yield if message.nil? && block_given? && @logger.send("#{severity}?")
+
       entry = Entry.new(@logger, @event, @metrics, message)
       @logger.send(severity, entry)
     end
