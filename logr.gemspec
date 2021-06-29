@@ -19,8 +19,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "byebug"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec", "~> 3.10"
   spec.add_development_dependency "timecop", "~> 0.8"
 end
